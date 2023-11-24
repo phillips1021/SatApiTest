@@ -1,0 +1,6 @@
+@SatApiTest_HostAddress = http://localhost:5042
+
+GET {{SatApiTest_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
