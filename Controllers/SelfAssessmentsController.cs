@@ -80,8 +80,24 @@ namespace SatApiTest.Controllers
             _context.SelfAssessments.Add(selfAssessment);
             await _context.SaveChangesAsync();
 
-            // return CreatedAtAction("GetSelfAssessment", new { id = selfAssessment.Id }, selfAssessment);
             return CreatedAtAction(nameof(GetSelfAssessment), new { id = selfAssessment.Id }, selfAssessment);
+        }
+
+        // POST: api/SelfAssessmentsCsv
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost("~/SelfAssessmentCsv")]
+        public async Task<ActionResult<SelfAssessment>> SelfAssessmentCsv(String selfAssessmentCsv)
+        {
+           
+
+           SelfAssessment selfAssessment = SelfAssessment.FromCsv(selfAssessmentCsv);
+
+            _context.SelfAssessments.Add(selfAssessment);
+
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetSelfAssessment), new { id = selfAssessment.Id }, selfAssessment);
+
         }
 
         // DELETE: api/SelfAssessments/5
