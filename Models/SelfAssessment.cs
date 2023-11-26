@@ -1,8 +1,10 @@
 using System;
 using System.Globalization;
+using System.Text;
 using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.Configuration.Attributes;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Elfie.Serialization;
 using SatApiTest.Controllers;
 using SatApiTest.Models;
@@ -96,6 +98,226 @@ namespace SatApiTest.Models
 
             
         }
+
+        internal static SelfAssessment FromJson(SelfAssessmentDTO selfAssessmentDTO)
+        {
+
+            SelfAssessment selfAssessment = new SelfAssessment();
+
+            selfAssessment.Institution = selfAssessmentDTO.Institution;
+
+            foreach (var value in selfAssessmentDTO.Competencies())
+            {
+                var domain = int.Parse(value.Substring(1, 1));
+                var competency = int.Parse(value.Substring(3, 1));
+                var answer = int.Parse(value.Substring(5, 1));
+
+                switch (domain)
+                {
+                    case 1:
+                        switch (competency)
+                        {
+                            case 1:
+                                selfAssessment.Domain1Competency1 = answer;
+                                break;
+                            case 2:
+                                selfAssessment.Domain1Competency2 = answer;
+                                break;
+                            case 3:
+                                selfAssessment.Domain1Competency3 = answer;
+                                break;
+                            case 4:
+                                selfAssessment.Domain1Competency4 = answer;
+                                break;
+                            case 5:
+                                selfAssessment.Domain1Competency5 = answer;
+                                break;
+                            case 6:
+                                selfAssessment.Domain1Competency6 = answer;
+                                break;
+                        }
+                        break;
+                    case 2:
+                        switch (competency)
+                        {
+                            case 1:
+                                selfAssessment.Domain2Competency1 = answer;
+                                break;
+                            case 2:
+                                selfAssessment.Domain2Competency2 = answer;
+                                break;
+                            case 3:
+                                selfAssessment.Domain2Competency3 = answer;
+                                break;
+                            case 4:
+                                selfAssessment.Domain2Competency4 = answer;
+                                break;
+                        }
+                        break;
+                    case 3:
+                        switch (competency)
+                        {
+                            case 1:
+                                selfAssessment.Domain3Competency1 = answer;
+                                break;
+                            case 2:
+                                selfAssessment.Domain3Competency2 = answer;
+                                break;
+                            case 3:
+                                selfAssessment.Domain3Competency3 = answer;
+                                break;
+                            case 4:
+                                selfAssessment.Domain3Competency4 = answer;
+                                break;
+                        }
+                        break;
+                    case 4:
+                        switch (competency)
+                        {
+                            case 1:
+                                selfAssessment.Domain4Competency1 = answer;
+                                break;
+                            case 2:
+                                selfAssessment.Domain4Competency2 = answer;
+                                break;
+                            case 3:
+                                selfAssessment.Domain4Competency3 = answer;
+                                break;
+                            case 4:
+                                selfAssessment.Domain4Competency4 = answer;
+                                break;
+                            case 5:
+                                selfAssessment.Domain4Competency5 = answer;
+                                break;
+                        }
+                        break;
+                    case 5:
+                        switch (competency)
+                        {
+                            case 1:
+                                selfAssessment.Domain5Competency1 = answer;
+                                break;
+                            case 2:
+                                selfAssessment.Domain5Competency2 = answer;
+                                break;
+                            case 3:
+                                selfAssessment.Domain5Competency3 = answer;
+                                break;
+                            case 4:
+                                selfAssessment.Domain5Competency4 = answer;
+                                break;
+                        }
+                        break;
+                }
+            }
+
+            foreach (var value in selfAssessmentDTO.ImportantCompetencies())
+            {
+                var domain = int.Parse(value.Substring(1, 1));
+                var competency = int.Parse(value.Substring(3, 1));
+                switch (domain)
+                {
+                    case 1:
+                        switch (competency)
+                        {
+                            case 1:
+                                selfAssessment.Domain1Competency1Important = true;
+                                break;
+                            case 2:
+                                selfAssessment.Domain1Competency2Important = true;
+                                break;
+                            case 3:
+                                selfAssessment.Domain1Competency3Important = true;
+                                break;
+                            case 4:
+                                selfAssessment.Domain1Competency4Important = true;
+                                break;
+                            case 5:
+                                selfAssessment.Domain1Competency5Important = true;
+                                break;
+                            case 6:
+                                selfAssessment.Domain1Competency6Important = true;
+                                break;
+                        }
+                        break;
+                    case 2:
+                        switch (competency)
+                        {
+                            case 1:
+                                selfAssessment.Domain2Competency1Important = true;
+                                break;
+                            case 2:
+                                selfAssessment.Domain2Competency2Important = true;
+                                break;
+                            case 3:
+                                selfAssessment.Domain2Competency3Important = true;
+                                break;
+                            case 4:
+                                selfAssessment.Domain2Competency4Important = true;
+                                break;
+                        }
+                        break;
+                    case 3:
+                        switch (competency)
+                        {
+                            case 1:
+                                selfAssessment.Domain3Competency1Important = true;
+                                break;
+                            case 2:
+                                selfAssessment.Domain3Competency2Important = true;
+                                break;
+                            case 3:
+                                selfAssessment.Domain3Competency3Important = true;
+                                break;
+                            case 4:
+                                selfAssessment.Domain3Competency4Important = true;
+                                break;
+                        }
+                        break;
+                    case 4:
+                        switch (competency)
+                        {
+                            case 1:
+                                selfAssessment.Domain4Competency1Important = true;
+                                break;
+                            case 2:
+                                selfAssessment.Domain4Competency2Important = true;
+                                break;
+                            case 3:
+                                selfAssessment.Domain4Competency3Important = true;
+                                break;
+                            case 4:
+                                selfAssessment.Domain4Competency4Important = true;
+                                break;
+                            case 5:
+                                selfAssessment.Domain4Competency5Important = true;
+                                break;
+                        }
+                        break;
+                    case 5:
+                        switch (competency)
+                        {
+                            case 1:
+                                selfAssessment.Domain5Competency1Important = true;
+                                break;
+                            case 2:
+                                selfAssessment.Domain5Competency2Important = true;
+                                break;
+                            case 3:
+                                selfAssessment.Domain5Competency3Important = true;
+                                break;
+                            case 4:
+                                selfAssessment.Domain5Competency4Important = true;
+                                break;
+                        }
+                        break;
+                }
+            }
+
+            return selfAssessment;
+        }
+
+       
     }
 
     public sealed class SelfAssessmentMap : ClassMap<SelfAssessment>

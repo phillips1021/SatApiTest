@@ -12,6 +12,8 @@ namespace SatApiTest
 
             // Add services to the container.
 
+            builder.Services.AddCors();
+
             builder.Services.AddControllers();
             builder.Services.AddDbContext<SatContext>(options =>
                            options.UseInMemoryDatabase("Data Source=sat.db"));
@@ -36,7 +38,17 @@ namespace SatApiTest
 
             app.MapControllers();
 
+            app.UseCors(builder =>
+            {
+                builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            });
+
             app.Run();
+
+
         }
     }
 }
