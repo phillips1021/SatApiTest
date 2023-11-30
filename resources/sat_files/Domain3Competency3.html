@@ -1,0 +1,22 @@
+<div class="{{ d3c3Order }} avoidPageBreak">
+  <h5>Bi-Directional Feedback</h5>
+  <div class="ml-2">
+    <b>Current Competency:</b>
+    <span>
+      {{ d3c3Level }}
+    </span>
+    <br />
+    {{ hided3c3Start }}
+    <b>Next Competency:</b>
+    <span>{{ d3c3NextLevel }} </span>
+    <br />
+    <b>Read This Resource:</b>
+    <span> {{ d3c3RecommendedResource }}</span>
+    <br />
+    <a href="{{ d3c3RecommendedResourceUrl }}">{{
+      d3c3RecommendedResourceUrl
+    }}</a>
+    {{ hided3c3End }}
+    <br />
+  </div>
+</div>

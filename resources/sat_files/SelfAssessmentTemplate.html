@@ -1,0 +1,297 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>Preceptor Self-Assessment Results</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="{{ RootFolder }}/Content/bootstrap.min.css" rel="stylesheet" />
+    <!-- <link
+      href="http://test.teachingphysician.org/Frontend/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    /> -->
+
+    <style>
+      @page {
+        margin-top: 2cm;
+        margin-bottom: 2cm;
+        margin-left: 2cm;
+        margin-right: 2cm;
+      }
+
+      /* Competencies */
+      .competencyCell {
+        background-color: darkgray !important;
+        -webkit-print-color-adjust: exact;
+        float: left;
+        min-width: 250px;
+        /* border-top: 1px solid black; */
+        height: 34px;
+      }
+
+      #domainTitleList,
+      #domainSectionList,
+      .domain1CompetencyOrder,
+      .domain2CompetencyOrder,
+      .domain3CompetencyOrder,
+      .domain4CompetencyOrder,
+      .domain5CompetencyOrder {
+        display: flex;
+        flex-direction: column;
+      }
+
+      #domainTitleList > .a,
+      #domainSectionList > .a,
+      .domain1CompetencyOrder > .a,
+      .domain2CompetencyOrder > .a,
+      .domain3CompetencyOrder > .a,
+      .domain4CompetencyOrder > .a,
+      .domain5CompetencyOrder > .a {
+        order: 1;
+      }
+
+      #domainTitleList > .b,
+      #domainSectionList > .b,
+      .domain1CompetencyOrder > .b,
+      .domain2CompetencyOrder > .b,
+      .domain3CompetencyOrder > .b,
+      .domain4CompetencyOrder > .b,
+      .domain5CompetencyOrder > .b {
+        order: 2;
+      }
+
+      #domainTitleList > .c,
+      #domainSectionList > .c,
+      .domain1CompetencyOrder > .c,
+      .domain2CompetencyOrder > .c,
+      .domain3CompetencyOrder > .c,
+      .domain4CompetencyOrder > .c,
+      .domain5CompetencyOrder > .c {
+        order: 3;
+      }
+
+      #domainTitleList > .d,
+      #domainSectionList > .d,
+      .domain1CompetencyOrder > .d,
+      .domain2CompetencyOrder > .d,
+      .domain3CompetencyOrder > .d,
+      .domain4CompetencyOrder > .d,
+      .domain5CompetencyOrder > .d {
+        order: 4;
+      }
+
+      #domainTitleList > .e,
+      #domainSectionList > .e,
+      .domain1CompetencyOrder > .e,
+      .domain2CompetencyOrder > .e,
+      .domain3CompetencyOrder > .e,
+      .domain4CompetencyOrder > .e,
+      .domain5CompetencyOrder > .e {
+        order: 5;
+      }
+
+      #domainTitleList > .f,
+      #domainSectionList > .f,
+      .domain1CompetencyOrder > .f,
+      .domain2CompetencyOrder > .f,
+      .domain3CompetencyOrder > .f,
+      .domain4CompetencyOrder > .f,
+      .domain5CompetencyOrder > .f {
+        order: 6;
+      }
+
+      @media print {
+        .avoidPageBreak {
+          page-break-inside: avoid;
+        }
+      }
+
+      .height40 {
+        height: 36px;
+      }
+
+      .levelCell {
+        min-width: 125px;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+        float: left;
+        height: 35px;
+      }
+
+      .p-2 {
+        padding: 0.5rem !important;
+      }
+
+      .text-center {
+        text-align: center !important;
+      }
+
+      .border {
+        border: 1px solid #dee2e6 !important;
+      }
+
+      .border-dark {
+        border-color: #343a40 !important;
+      }
+
+      .ml-1,
+      .mx-1 {
+        margin-left: 0.25rem !important;
+      }
+
+      .row {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+      }
+
+      h5 {
+        font-size: 20px;
+        margin-top: 10px !important;
+      }
+
+      .logoImage {
+        position: absolute;
+        left: 200px;
+        bottom: 50px;
+      }
+
+      .teachTransformImage {
+        position: absolute;
+        right: 200px;
+        bottom: 50px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main role="main">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col">
+            <div class="row">
+              <div class="col">
+                <h1>Preceptor Competencies Self-Assessment Results</h1>
+                <p>Date: {{ Date }}</p>
+                <p>
+                  The results below are organized according to highest need and
+                  greatest relevance to you. They contain live links to content
+                  on TeachingPhysician.org that will help you advance your
+                  skills as a preceptor. The downloadable PDF contains live
+                  links to the same content. Read through the content, try what
+                  you’ve learned, then re-take the assessment.
+                </p>
+                <p>
+                  For your privacy, the information in this self-assessment is
+                  anonymously generated by the system. After you close this
+                  page, you can only access your results via the bookmarked link
+                  or the Results PDF. Save the Results PDF on your hard drive
+                  and/or print it for future use. If you want to share the
+                  results of your self-assessment, either share this page’s
+                  link, or email the downloaded PDF.
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <h1>Overview</h1>
+                <p>
+                  <i>
+                    According to your self-assessment, we recommend you plan
+                    your professional development in the following order
+                    according to domain. If you wish to see all content relevant
+                    to each competency in a domain, please visit the Learning
+                    Paths at
+                      <a href="https://www.teachingphysician.org/content/learning-paths">TeachingPhysician.org/content/learning-paths</a>. Log in is required
+                  </i>
+                </p>
+              </div>
+            </div>
+            <div class="row" style="page-break-after: always">
+              <div class="col">
+                <ul class="domainTitleList">
+                  <li class="">
+                    <span>{{ Domain1 }}</span>
+                    <br />
+                    <a href="{{ Domain1Url }}" class="hideOnResultsPage">{{
+                      Domain1Url
+                    }}</a>
+                  </li>
+                  <li class="">
+                    <span>{{ Domain2 }}</span>
+                    <br />
+                    <a href="{{ Domain2Url }}" class="hideOnResultsPage">{{
+                      Domain2Url
+                    }}</a>
+                  </li>
+                  <li class="">
+                    <span>{{ Domain3 }}</span>
+                    <br />
+                    <a href="{{ Domain3Url }}" class="hideOnResultsPage">{{
+                      Domain3Url
+                    }}</a>
+                  </li>
+                  <li class="">
+                    <span>{{ Domain4 }}</span>
+                    <br />
+                    <a href="{{ Domain4Url }}" class="hideOnResultsPage">{{
+                      Domain4Url
+                    }}</a>
+                  </li>
+                  <li class="">
+                    <span>{{ Domain5 }}</span>
+                    <br />
+                    <a href="{{ Domain5Url }}" class="hideOnResultsPage">{{
+                      Domain5Url
+                    }}</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row hideOnResultsPage">
+          <div class="col-md-6">
+            <img
+              class="logoImage"
+              src="{{ ImagesRootFolder }}/STFMLogo-Color-CMYK.png"
+              alt=""
+              width="189"
+              height="77"
+            />
+          </div>
+          <div class="col-md-6">
+            <img
+              class="teachTransformImage"
+              src="{{ ImagesRootFolder }}/teach&transformOriginalV3.png"
+              alt=""
+              width="219"
+              height="83"
+            />
+          </div>
+        </div>
+
+        <div id="domainSectionList" class="row">
+          <div class="col">
+            {{ domainsSection }}
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="Content/bootstrap.min.js"></script>
+    <script src="{{ RootFolder }}/Content/bootstrap.min.js"></script>
+  </body>
+</html>
