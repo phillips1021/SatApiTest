@@ -167,6 +167,7 @@ namespace SatApiTest.Controllers
         }
 
         [HttpGet]
+        [EnableCors]
         [Route("GenerateSelfAssessmentForm")]
         [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult GenerateSelfAssessmentForm(Guid id, bool returnHtml = false)
