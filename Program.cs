@@ -3,6 +3,7 @@ using DinkToPdf.Contracts;
 using DinkToPdf;
 using Microsoft.EntityFrameworkCore;
 using SatApiTest.Models;
+using System.Configuration;
 
 namespace SatApiTest
 {
@@ -18,7 +19,7 @@ namespace SatApiTest
 
             builder.Services.AddControllers();
             builder.Services.AddDbContext<SatContext>(options =>
-                           options.UseInMemoryDatabase("Data Source=sat.db"));
+                           options.UseSqlServer(builder.Configuration.GetConnectionString("selfassessmenttest")));
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
