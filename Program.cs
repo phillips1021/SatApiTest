@@ -1,4 +1,6 @@
 
+using DinkToPdf.Contracts;
+using DinkToPdf;
 using Microsoft.EntityFrameworkCore;
 using SatApiTest.Models;
 
@@ -21,6 +23,7 @@ namespace SatApiTest
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
             var app = builder.Build();
 

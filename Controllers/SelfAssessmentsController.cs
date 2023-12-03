@@ -10,6 +10,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CsvHelper;
 using CsvHelper.Configuration;
+using DinkToPdf;
+using DinkToPdf.Contracts;
 using HandlebarsDotNet;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
@@ -30,13 +32,16 @@ namespace SatApiTest.Controllers
 
         private HttpClient client = new HttpClient();
 
-        public SelfAssessmentsController(SatContext context)
+        private readonly IConverter converter;
+
+        public SelfAssessmentsController(SatContext context, IConverter converter)
         {
             _context = context;
 
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
+            this.converter = converter;
         }
 
         // GET: api/SelfAssessments
@@ -111,9 +116,9 @@ namespace SatApiTest.Controllers
         [HttpPost("~/SelfAssessmentCsv")]
         public async Task<ActionResult<SelfAssessment>> SelfAssessmentCsv(String selfAssessmentCsv)
         {
-           
 
-           SelfAssessment selfAssessment = SelfAssessment.FromCsv(selfAssessmentCsv);
+
+            SelfAssessment selfAssessment = SelfAssessment.FromCsv(selfAssessmentCsv);
 
             _context.SelfAssessments.Add(selfAssessment);
 
@@ -173,17 +178,12 @@ namespace SatApiTest.Controllers
         public IActionResult GenerateSelfAssessmentForm(Guid id, bool returnHtml = false)
         {
 
-            //Load the SelfAssessment data
-
-            var selfAssessmentCsv = "de042bd3-da53-4091-9dc1-f9110a8223e9,7/14/2023 12:00:53 PM,brucetest25,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,False,True";
-
-            SelfAssessment selfAssessment= SelfAssessment.FromCsv(selfAssessmentCsv);
+            var selfAssessment = _context.SelfAssessments.Find(id);
 
             if (selfAssessment == null)
             {
                 throw new Exception("Unable to locate data for Id " + id.ToString());
             }
-
 
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
@@ -409,8 +409,54 @@ namespace SatApiTest.Controllers
             var template = Handlebars.Compile(htmlTemplate);
             var html = template(cleanedUpData);
 
-            
-            //TODO Readd the create PDF option
+           
+
+
+            if (!returnHtml)    //make a PDF!
+            {
+                try
+                {
+                    html.Replace("\r\n", "");
+                    var doc = new HtmlToPdfDocument()
+                    {
+                        GlobalSettings = {
+                        ColorMode = DinkToPdf.ColorMode.Color,
+                        Orientation = Orientation.Portrait,
+                        PaperSize = DinkToPdf.PaperKind.A4,
+                        Margins = new MarginSettings() { Top = 10 },
+                        ViewportSize = "1024x768"
+                },
+                        Objects = {
+                    new ObjectSettings() {
+                        // PagesCount = true,
+                        // HtmlContent = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. In consectetur mauris eget ultrices  iaculis. Ut                               odio viverra, molestie lectus nec, venenatis turpis.",
+                        HtmlContent = html,
+                        //Page = "https://purecss.io/forms/",
+                        //Page = "file:///c:/temp/SampleStudentPassport.html",
+                        WebSettings = { DefaultEncoding = "utf-8" }
+                        // HeaderSettings = { FontSize = 9, Right = "Page [page] of [toPage]", Line = true, Spacing = 2.812 }
+                    }
+                }
+                    };
+
+
+                    return File(
+                                      converter.Convert(doc),
+                                        "application/pdf",
+                                        "self-assessment.pdf");
+
+
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error loading PDF for some reason\n" + ex.ToString());
+                    throw;
+                }
+
+            }
+            else
+            {
 
                 //Just return the HTML so it can be displayed on a webpage
                 return new ContentResult
@@ -419,8 +465,11 @@ namespace SatApiTest.Controllers
                     StatusCode = (int)HttpStatusCode.OK,
                     Content = html.Replace("\r\n", "")
                 };
-            
+            }
+
         }
+
+
 
         //These probably don't need to be class vars anymore
         private Dictionary<int, float> domainScores = new Dictionary<int, float>();
